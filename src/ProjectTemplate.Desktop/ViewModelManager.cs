@@ -42,6 +42,22 @@ namespace ProjectTemplate.Desktop
             return container.Resolve<TViewModel>();
         }
 
+        public Task OpenTestAsync()
+        {
+            return ActiveViewModelAsync<TestViewModel>();
+        }
+
+        private async Task ActiveViewModelAsync<T>() where T : ViewModel
+        {
+            T viewModel = FindViewModel<T>();
+            if (viewModel == null)
+            {
+                viewModel = CreateViewModel<T>();
+                await viewModel.LoadAsync();
+            }
+            await ActiveViewModelAsync(viewModel);
+        }
+
         private async Task ActiveViewModelAsync(ViewModel viewModel)
         {
             bool addBackground = Keyboard.GetKeyStates(Key.LeftShift) == KeyStates.Down || Keyboard.GetKeyStates(Key.RightShift) == KeyStates.Down;

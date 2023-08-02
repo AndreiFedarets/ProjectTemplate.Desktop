@@ -135,6 +135,11 @@ namespace ProjectTemplate.Desktop.ViewModels
             }
         }
 
+        public virtual Task LoadAsync()
+        {
+            return Task.CompletedTask;
+        }
+
         public virtual void Submit()
         {
             OnUIThread(async () => await TryCloseAsync(true));

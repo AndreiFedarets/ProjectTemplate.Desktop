@@ -120,4 +120,10 @@
   <data name="Loading_Message" xml:space="preserve">
     <value>LOADING...</value>
   </data>
+  <data name="View_Main_DisplayName" xml:space="preserve">
+    <value>MAIN</value>
+  </data>
+  <data name="View_Test_DisplayName" xml:space="preserve">
+    <value>TEST</value>
+  </data>
 </root>

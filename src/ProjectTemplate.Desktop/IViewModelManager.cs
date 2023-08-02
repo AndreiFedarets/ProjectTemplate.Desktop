@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ProjectTemplate.Desktop.ViewModels;
 
 namespace ProjectTemplate.Desktop
@@ -12,6 +13,8 @@ namespace ProjectTemplate.Desktop
         TViewModel CreateViewModel<TViewModel, TArg>(TArg arg);
 
         TViewModel CreateViewModel<TViewModel, TArg1, TArg2>(TArg1 arg1, TArg2 arg2);
+
+        Task OpenTestAsync();
 
         void ShowError(string message, Exception exception = null);
 

@@ -68,5 +68,23 @@ namespace ProjectTemplate.Desktop.Properties {
                 return ResourceManager.GetString("Loading_Message", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAIN.
+        /// </summary>
+        internal static string View_Main_DisplayName {
+            get {
+                return ResourceManager.GetString("View_Main_DisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TEST.
+        /// </summary>
+        internal static string View_Test_DisplayName {
+            get {
+                return ResourceManager.GetString("View_Test_DisplayName", resourceCulture);
+            }
+        }
     }
 }

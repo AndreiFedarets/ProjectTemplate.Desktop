@@ -1,11 +1,73 @@
 ﻿<controls:View x:Class="ProjectTemplate.Desktop.Views.MainView"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:system="clr-namespace:System;assembly=System.Runtime"
                xmlns:controls="clr-namespace:ProjectTemplate.Desktop.Controls"
                xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                xmlns:caliburn="http://www.caliburnproject.org"
                WindowState="Maximized">
     <Grid>
-            
+        <materialDesign:DrawerHost x:Name="DrawerHost">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <Menu MinWidth="300">
+                    <Menu.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </Menu.ItemsPanel>
+                    <Separator />
+                    <MenuItem Icon="{materialDesign:PackIcon Kind=ArrowLeft}"
+                                   Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Left}"/>
+                    <Separator />
+                    <MenuItem caliburn:Message.Attach="OpenTestAsync" Header="TEST" Icon="{materialDesign:PackIcon Kind=FormatListText}" 
+                                  Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Left}" />
+                    <Separator />
+                </Menu>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <ContentControl Grid.Row="0" caliburn:View.Model="{Binding StatusBar}" />
+
+                <TabControl Grid.Row="1" ItemsSource="{Binding Documents.Items}" SelectedItem="{Binding Documents.ActiveItem}" Style="{StaticResource MaterialDesignNavigationRailTabControl}" TabStripPlacement="Top"
+                    materialDesign:ColorZoneAssist.Mode="PrimaryMid" materialDesign:NavigationRailAssist.ShowSelectionBackground="True" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                    <TabControl.ItemContainerStyle>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource MaterialDesignNavigationRailTabItem}">
+                            <Setter Property="Width" Value="{x:Static system:Double.NaN}" />
+                            <Setter Property="Height" Value="48" />
+                            <Setter Property="Padding" Value="{StaticResource MarginNormal}" />
+                            <Setter Property="MinWidth" Value="120" />
+                            <EventSetter Event="PreviewMouseDown" Handler="OnTabItemPreviewMouseDown" />
+                        </Style>
+                    </TabControl.ItemContainerStyle>
+
+                    <materialDesign:NavigationRailAssist.FloatingContent>
+                        <Button Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Left}" 
+                            Style="{StaticResource MaterialDesignFlatSecondaryMidBgButton}" Height="48" Width="48" materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                            materialDesign:ButtonAssist.CornerRadius="0">
+                            <materialDesign:PackIcon Kind="Menu" Width="24" Height="24" />
+                        </Button>
+                    </materialDesign:NavigationRailAssist.FloatingContent>
+
+                    <TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DisplayName, Mode=OneWay}" Style="{StaticResource NormalTextBlockStyle}" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+
+                    <TabControl.ContentTemplate>
+                        <DataTemplate>
+                            <ContentControl Grid.Row="1" caliburn:View.Model="{Binding}" />
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+
+                </TabControl>
+            </Grid>
+
+        </materialDesign:DrawerHost>
     </Grid>
 </controls:View>
